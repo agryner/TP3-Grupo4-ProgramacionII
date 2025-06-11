@@ -3,31 +3,37 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Nodo<T> {
+import interfaces.INodo;
+
+public class Nodo<T> implements INodo<T> {
 
     private T dato;
-    private List<Nodo<T>> vecinos;
+    private List<INodo<T>> vecinos;
 
     public Nodo(T dato) {
         this.dato = dato;
         this.vecinos = new ArrayList<>();
     }
 
+    @Override
     public T getDato() {
         return dato;
     }
 
+    @Override
     public void setDato(T dato) {
         this.dato = dato;
     }
 
-    public void agregarVecino(Nodo<T> vecino) {
+    @Override
+    public void agregarVecino(INodo<T> vecino) {
         if (!vecinos.contains(vecino)) {
             vecinos.add(vecino);
         }
     }
 
-    public List<Nodo<T>> getVecinos() {
+    @Override
+    public List<INodo<T>> getVecinos() {
         return vecinos;
     }
 }

@@ -1,10 +1,12 @@
 package model;
 
 import java.util.*;
+import interfaces.IGrafo;
+import interfaces.INodo;
 
-public class Grafo<T> {
+public class Grafo<T> implements IGrafo<T> {
 
-    private Map<T, Nodo<T>> nodos = new HashMap<>();
+    private Map<T, INodo<T>> nodos = new HashMap<>();
     private boolean esDirigido;
 
     public Grafo(boolean esDirigido) {
@@ -13,14 +15,14 @@ public class Grafo<T> {
 
     public void agregarNodo(T dato) {
         if (!nodos.containsKey(dato)) {
-            nodos.put(dato, new Nodo<>(dato));
+            nodos.put(dato, new Nodo<>(dato));  // Nodo<T> implementa INodo<T>
         }
     }
 
     public void agregarArista(T origen, T destino) {
         if (nodos.containsKey(origen) && nodos.containsKey(destino)) {
-            Nodo<T> nodoOrigen = nodos.get(origen);
-            Nodo<T> nodoDestino = nodos.get(destino);
+            INodo<T> nodoOrigen = nodos.get(origen);
+            INodo<T> nodoDestino = nodos.get(destino);
 
             if (!nodoOrigen.getVecinos().contains(nodoDestino)) {
                 nodoOrigen.agregarVecino(nodoDestino);
@@ -44,8 +46,8 @@ public class Grafo<T> {
         for (T dato1 : claves) {
             System.out.print(dato1 + ": ");
             for (T dato2 : claves) {
-                Nodo<T> nodo1 = nodos.get(dato1);
-                Nodo<T> nodo2 = nodos.get(dato2);
+                INodo<T> nodo1 = nodos.get(dato1);
+                INodo<T> nodo2 = nodos.get(dato2);
                 System.out.print(nodo1.getVecinos().contains(nodo2) ? "1 " : "0 ");
             }
             System.out.println();
@@ -54,9 +56,9 @@ public class Grafo<T> {
 
     public void mostrarListaAdyacencia() {
         System.out.println("Lista de Adyacencia:");
-        for (Map.Entry<T, Nodo<T>> entrada : nodos.entrySet()) {
+        for (Map.Entry<T, INodo<T>> entrada : nodos.entrySet()) {
             System.out.print(entrada.getKey() + ": ");
-            for (Nodo<T> vecino : entrada.getValue().getVecinos()) {
+            for (INodo<T> vecino : entrada.getValue().getVecinos()) {
                 System.out.print(vecino.getDato() + " ");
             }
             System.out.println();
@@ -67,17 +69,17 @@ public class Grafo<T> {
         if (!nodos.containsKey(inicio)) return;
 
         Set<T> visitados = new HashSet<>();
-        Queue<Nodo<T>> cola = new LinkedList<>();
+        Queue<INodo<T>> cola = new LinkedList<>();
 
-        Nodo<T> nodoInicio = nodos.get(inicio);
+        INodo<T> nodoInicio = nodos.get(inicio);
         cola.add(nodoInicio);
         visitados.add(inicio);
 
         System.out.println("Recorrido BFS:");
         while (!cola.isEmpty()) {
-            Nodo<T> actual = cola.poll();
+            INodo<T> actual = cola.poll();
             System.out.print(actual.getDato() + " ");
-            for (Nodo<T> vecino : actual.getVecinos()) {
+            for (INodo<T> vecino : actual.getVecinos()) {
                 if (!visitados.contains(vecino.getDato())) {
                     visitados.add(vecino.getDato());
                     cola.add(vecino);
@@ -95,10 +97,10 @@ public class Grafo<T> {
         System.out.println();
     }
 
-    private void dfsRec(Nodo<T> actual, Set<T> visitados) {
+    private void dfsRec(INodo<T> actual, Set<T> visitados) {
         visitados.add(actual.getDato());
         System.out.print(actual.getDato() + " ");
-        for (Nodo<T> vecino : actual.getVecinos()) {
+        for (INodo<T> vecino : actual.getVecinos()) {
             if (!visitados.contains(vecino.getDato())) {
                 dfsRec(vecino, visitados);
             }
