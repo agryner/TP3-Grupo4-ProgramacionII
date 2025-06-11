@@ -1,5 +1,10 @@
 package interfaces;
 
-public interface INodo {
+import java.util.List;
 
+public interface INodo<T> {
+    T getDato();
+    void setDato(T dato);
+    void agregarVecino(INodo<T> vecino);
+    List<INodo<T>> getVecinos();
 }
