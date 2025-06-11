@@ -8,10 +8,10 @@ public class TestPersonaGrafo {
     public static void main(String[] args) {
         Grafo<Persona> grafo = new Grafo<>(true); // true = grafo dirigido
 
-        Persona p1 = new Persona("Juan", 1);
-        Persona p2 = new Persona("Ana", 2);
-        Persona p3 = new Persona("Luis", 3);
-        Persona p4 = new Persona("Sofía", 4);
+        Persona p1 = new Persona("Gael", 1);
+        Persona p2 = new Persona("Micaela", 2);
+        Persona p3 = new Persona("Agustina", 3);
+        Persona p4 = new Persona("Diego", 4);
 
         grafo.agregarNodo(p1);
         grafo.agregarNodo(p2);
